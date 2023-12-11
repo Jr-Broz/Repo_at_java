@@ -7,15 +7,8 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-@Builder
-@JsonIgnoreProperties
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Weapon {
-
-//    "https://mhw-db.com/weapons"
-    //  private static final Logger LOGGER =
-    //
-    //            LoggerFactory.getLogger(App.class);
-
 
     @JsonProperty("id")
     public int ID;
@@ -25,31 +18,24 @@ public class Weapon {
 
 
     //Antes era String
-    @JsonProperty("type")
-
-    public String Tipo_Da_Arma;
-
-
+    @JsonProperty("slots")
+    public List Slot;
 
 
     @JsonProperty("durability")
     public List Durabilidade;
 
-public Weapon(int Id, String nomeArma, String tipArma, List durabilidade) {
+public Weapon(int Id, String nomeArma,  List durabilidade,  List SlotArma) {
 
     this.ID =   Id;
     Nome_Arma = nomeArma;
-    Tipo_Da_Arma = tipArma;
     Durabilidade = durabilidade;
+    Slot = SlotArma;
+
 }
 
-public Weapon() {}
+public Weapon() {
 
-
-
-
-
-
-
+}
 
 }

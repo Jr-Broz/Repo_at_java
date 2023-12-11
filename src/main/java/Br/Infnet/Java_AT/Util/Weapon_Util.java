@@ -3,8 +3,7 @@ import Br.Infnet.Java_AT.Model.Weapon;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.apache.logging.log4j.Logger;
-import org.junit.platform.commons.logging.LoggerFactory;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -14,12 +13,8 @@ import java.net.http.HttpResponse;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
 public class Weapon_Util{
-
-    private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(Weapon_Util.class);
-
-    private final String  Url_Da_API =  "https://mhw-db.com/weapons";
+  public final String  Url_Da_API =  "https://mhw-db.com/weapons/";
 
 public Weapon getArma(int id) {
 
@@ -30,7 +25,6 @@ public Weapon getArma(int id) {
         HttpClient client = HttpClient.newBuilder().build();
         HttpResponse<String> httpResponse = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-
         ObjectMapper objectMapper = JsonMapper.builder().addModule(new JavaTimeModule()).build();
 
         Weapon wep = objectMapper.readValue(httpResponse.body(), Weapon.class);
@@ -40,8 +34,7 @@ public Weapon getArma(int id) {
         List<String>  durabilidade = GetDurabilidade(wep);
         List<String>  tipoDaArma = getTipoArma(wep);
 
-    Weapon weapon =  new Weapon((Integer) id, nome_da_Arma, tipoDaArma.toString(), durabilidade);
-
+    Weapon weapon =  new Weapon((Integer) id, nome_da_Arma, durabilidade , tipoDaArma);
 
         return weapon;
     }
@@ -90,96 +83,26 @@ public Weapon getArma(int id) {
 
 
     //Talvez ter que ir na classe weapon colocar Tipo da arma como lista pra poder acessar o ,size() ?
-    for(int i = 0; i < weapon.getTipo_Da_Arma().length(); i++){
+    for(int i = 0; i < weapon.getSlot().size(); i++){
 
-        Object typ = weapon.getTipo_Da_Arma().length(i);
+        Object typ = weapon.getSlot().get(i);
 
+        if (typ instanceof Map) {
+
+            Map<String , Object> Type = (Map<String, Object>) typ;
+
+            Object pegarTipoArma = Type.get("type");
+
+            if(pegarTipoArma instanceof Map) {
+
+                Map<String, Object> tpArma = (Map<String, Object>)  pegarTipoArma;
+
+                Object nomeArma = tpArma.get("name");
+
+                TipoArmaLista.add(nomeArma.toString());
+            }
+        }
     }
-
-
-
-
-
-
-
-
-
-
-
+            return TipoArmaLista;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
