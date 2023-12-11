@@ -1,0 +1,14 @@
+<Configuration>
+    <appender name="STDOUT" class="cs.qos.logback.core.ConsoleAppender">
+
+        <encoder>
+            <pattern>%d{HH:mm:ss:SSS} [%thread] %-5level %logger{36} - %msgn%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level = "debug">
+        <appender-ref ref = "STDOUT" />
+    </root>
+
+
+</Configuration>
