@@ -7,6 +7,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
+@Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Weapon {
 
@@ -16,8 +17,6 @@ public class Weapon {
     @JsonProperty("name")
     public String Nome_Arma;
 
-
-    //Antes era String
     @JsonProperty("slots")
     public List Slot;
 
@@ -26,10 +25,7 @@ public class Weapon {
     public List Durabilidade;
 
 
-    public Weapon() {
-
-    }
-
+    public Weapon() {}
 
     public Weapon(int Id, String nomeArma,  List durabilidade,  List SlotArma) {
 
@@ -39,6 +35,4 @@ public class Weapon {
     Slot = SlotArma;
 
 }
-
-
 }

@@ -14,9 +14,10 @@ import org.mockito.internal.matchers.Equals;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.client.ResourceAccessException;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
-
 
 @Log
 @SpringBootTest
@@ -25,9 +26,8 @@ public class TestController {
 @Autowired
     Weapon_Service weapon_service;
 
-
 @Test
-@DisplayName("Testar api procurando por algum nome")
+@DisplayName("procurando por algum nome")
 public void retornarNome() {
 
     Weapon_Util weapon_util = new Weapon_Util();
@@ -36,13 +36,7 @@ public void retornarNome() {
 
     assertEquals("Purgation's Atrocity" , weapon.getNome_Arma());
         log.info(weapon.getNome_Arma());
-
-
-
 }
-
-
-
 
 @Test
 @DisplayName("Retornar qnt de armas") //Teste passa, entretanto caso alguem faça a requisicao delete o teste vai dar errado, caso contrario vai dar certo
@@ -52,39 +46,21 @@ public void retorno() {
 
     assertEquals(50, wp.size());
 }
-
     @Test
-    @DisplayName("Deve atualizar uma arma ")
-    public void atualizar() {
+    @DisplayName("Deve criar uma arma ")
+    public void criar() {
 
+    Weapon zweihander =     Weapon.builder().Nome_Arma("ZweiHander").ID(39).build();
 
+    log.info(zweihander.toString());
 
     }
-
-
-
-
-
 
     @Test
     @DisplayName("deve delete arma")
     public void deletarArma() {
 
         weapon_service.deleteID(1);
-        assertEquals(49, weapon_service.retornarTodos().size());
+        assertEquals(50, weapon_service.retornarTodos().size());
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

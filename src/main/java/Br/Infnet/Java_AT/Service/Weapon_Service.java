@@ -20,7 +20,7 @@ public class Weapon_Service {
         Map<Integer, Weapon> weaponMap1 = new HashMap<>();
         Weapon_Util weapon_util = new Weapon_Util();
 
-        for(int i = 1; i <= 50; i++) {
+        for(int i = 1; i <= 51; i++) {
 
             Weapon weapon = weapon_util.getArma(i);
             Weapon firstWeapon = new Weapon(weapon.getID(), weapon.getNome_Arma(),  weapon.getDurabilidade() ,weapon.getSlot() );
@@ -41,7 +41,7 @@ public class Weapon_Service {
 
         Weapon WP = weaponMap.remove(id);
         if(WP == null) {
-            throw new ResourceNotFoundException("Nao foi possivle achar o id da arma");
+            throw new ResourceNotFoundException("Nao foi possivel achar o id da arma");
         }
  }
 
@@ -58,26 +58,14 @@ public class Weapon_Service {
         return wplt.stream().filter(weapon -> weapon.getNome_Arma().startsWith(name)).toList();
  }
 
-
     public Weapon getWeaponID(int id) {
         Weapon wp =  weaponMap.get(id);
         if(wp == null) {throw new ResourceNotFoundException("Erro");}
         return wp;
     }
 
-
-
-
-
-
-
     public List<Weapon> retornarTodos() {
 
         return weaponMap.values().stream().toList();
     }
-
-
-
-
-
 }

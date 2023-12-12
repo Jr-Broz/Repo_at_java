@@ -16,8 +16,6 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/weapons")
 public class Weapon_Controller {
-
-
     @Autowired
     Weapon_Service wpService;
 
@@ -59,20 +57,18 @@ public class Weapon_Controller {
     return ResponseEntity.status(HttpStatus.CREATED).body(new ResponsePayload("criado com sucesso"));
     }
 
-
     @DeleteMapping("/{id}")
     public ResponseEntity<ResponsePayload> Delete(@PathVariable int id) {
 
         try {
 
             wpService.deleteID(id);
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(new ResponsePayload("Weapon deleted"));
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(new ResponsePayload("arma foi deletada com sucesso"));
         }
         catch (ResourceNotFoundException e ){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body( new ResponsePayload(e.getMessage()));
         }
    }
-
 
     @PutMapping("/{id}")
     public ResponseEntity<ResponsePayload> update(@PathVariable int id, @RequestBody Weapon UpdatedWeapon) {
@@ -80,7 +76,7 @@ public class Weapon_Controller {
         try{
 
             wpService.update(id, UpdatedWeapon);
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(new ResponsePayload("Weapon was updated"));
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(new ResponsePayload("arma atualizada com sucesso"));
         }
         catch (ResourceNotFoundException ex) {
 
