@@ -25,7 +25,13 @@ public class Weapon {
     @JsonProperty("durability")
     public List Durabilidade;
 
-public Weapon(int Id, String nomeArma,  List durabilidade,  List SlotArma) {
+
+    public Weapon() {
+
+    }
+
+
+    public Weapon(int Id, String nomeArma,  List durabilidade,  List SlotArma) {
 
     this.ID =   Id;
     Nome_Arma = nomeArma;
@@ -34,8 +40,5 @@ public Weapon(int Id, String nomeArma,  List durabilidade,  List SlotArma) {
 
 }
 
-public Weapon() {
-
-}
 
 }
