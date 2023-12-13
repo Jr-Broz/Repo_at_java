@@ -1,23 +1,23 @@
 package Br.Infnet.Java_AT;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import Br.Infnet.Java_AT.Controller.Weapon_Controller;
 import Br.Infnet.Java_AT.Model.Weapon;
 import Br.Infnet.Java_AT.Service.Weapon_Service;
 import Br.Infnet.Java_AT.Util.Weapon_Util;
+import Br.Infnet.Java_AT.exceptions.ResourceNotFoundException;
 import lombok.extern.java.Log;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.internal.matchers.Equals;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.ResourceAccessException;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @Log
 @SpringBootTest
@@ -43,7 +43,6 @@ public void retornarNome() {
 public void retorno() {
 
     List<Weapon> wp = weapon_service.retornarTodos();
-
     assertEquals(50, wp.size());
 }
     @Test
@@ -51,7 +50,6 @@ public void retorno() {
     public void criar() {
 
     Weapon zweihander =     Weapon.builder().Nome_Arma("ZweiHander").ID(39).build();
-
     log.info(zweihander.toString());
 
     }
@@ -63,4 +61,33 @@ public void retorno() {
         weapon_service.deleteID(1);
         assertEquals(50, weapon_service.retornarTodos().size());
     }
-}
+
+    @DisplayName("Testando requisicao Externa") public void testeReqExterna() {
+
+        TestRestTemplate restTemplate = new TestRestTemplate();
+        String Nome_Arma = "Buster Sword 1";
+
+        ResponseEntity<Weapon> responseEntity = restTemplate.getForEntity("https://mhw-db.com/weapons/1" , Weapon.class , Nome_Arma);
+
+        log.info("Corpo da Resposta da requisicao "+ responseEntity.getBody().toString());
+
+        assertEquals(200, responseEntity.getStatusCode());
+
+        assertEquals(Nome_Arma, responseEntity.getBody().getNome_Arma());
+
+        assertNotNull(responseEntity.getBody());
+    }
+
+    @Test
+    @DisplayName("Procurando disparo por excecao")
+    public void chamarExcecao() {
+
+        ResourceNotFoundException ChecarResourceNotFound = assertThrows(ResourceNotFoundException.class, () -> {
+
+            weapon_service.getWeaponID(90);
+
+
+        });
+
+        }
+    }

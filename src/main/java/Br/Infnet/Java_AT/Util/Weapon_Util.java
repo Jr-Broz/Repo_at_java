@@ -50,11 +50,12 @@ public Weapon getArma(int id) {
 
     }
     catch (URISyntaxException | IOException | InterruptedException e) {
+        log.warning("Erro na requisicao");
         throw new RuntimeException(e);
     }
     finally {
 
-        log.info("Aplicação rodou");
+        log.info("Aplicação Está Rodando.. ");
     }
 }
 

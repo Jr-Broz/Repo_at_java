@@ -52,9 +52,15 @@ public class Weapon_Controller {
 @PostMapping
     public ResponseEntity<ResponsePayload> create(@RequestBody Weapon weap) {
 
+
         wpService.create(weap);
+
+        Object armaCriada = weap;
+
+
         log.info(String.valueOf(HttpStatus.CREATED));
-    return ResponseEntity.status(HttpStatus.CREATED).body(new ResponsePayload("criado com sucesso"));
+        log.info("Arma Criada " + armaCriada);
+    return ResponseEntity.status(HttpStatus.CREATED).body(new ResponsePayload("criado com sucesso, Cheque o log no console."));
     }
 
     @DeleteMapping("/{id}")

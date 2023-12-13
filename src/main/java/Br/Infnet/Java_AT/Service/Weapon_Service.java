@@ -60,7 +60,7 @@ public class Weapon_Service {
 
     public Weapon getWeaponID(int id) {
         Weapon wp =  weaponMap.get(id);
-        if(wp == null) {throw new ResourceNotFoundException("Erro");}
+        if(wp == null) {throw new ResourceNotFoundException("Erro, nao foi possivel encontrar o que procurava.");}
         return wp;
     }
 
