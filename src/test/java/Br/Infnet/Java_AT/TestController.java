@@ -85,8 +85,6 @@ public void retorno() {
         ResourceNotFoundException ChecarResourceNotFound = assertThrows(ResourceNotFoundException.class, () -> {
 
             weapon_service.getWeaponID(90);
-
-
         });
 
         }

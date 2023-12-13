@@ -39,6 +39,11 @@ public Weapon getArma(int id) {
             log.info("Resposta da requisição:  " + httpResponse.statusCode());
         }
 
+        if(httpResponse.statusCode() != 200) {
+
+            log.info("Error ");
+        }
+
         String nome_da_Arma = wep.getNome_Arma();
         int iD = wep.getID();
         List<String>  durabilidade = GetDurabilidade(wep);
